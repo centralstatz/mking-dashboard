@@ -7,6 +7,8 @@ library(shinythemes)
 library(shinycssloaders)
 library(ggplot2)
 library(dplyr)
+library(stringr)
+library(forcats)
 
 ## Load data files
 
@@ -17,7 +19,38 @@ base_path <- "https://raw.githubusercontent.com/mking579/Dashboard/refs/heads/ma
 inequality_data <- read.csv(paste0(base_path, "Inequality.csv"))
 gini_data <- read.csv(paste0(base_path, "Gini.csv"))
 income_shares_data <- read.csv(paste0(base_path, "Income_Shares.csv"))
-healthcare_data <- read.csv(paste0(base_path, "Healthcare_Expenditures.csv"))
-voter_turnout_data <- read.csv(paste0(base_path, "Voter_Turnout_by_State.csv"))
-incarceration_data <- read.csv(paste0(base_path, "Incarceration_Counts_Rates.csv"))
+
+healthcare_data <- 
+  read.csv(paste0(base_path, "Healthcare_Expenditures.csv")) |>
+  
+  # Remove characters; parse as numeric quantity
+  mutate(
+    across(
+      c(Out_of_Pocket, Percent_Change_YoY),
+      \(x) str_remove(x, pattern = "^[$]|[%]$|[,]") |> as.numeric()
+    )
+  )
+
+voter_turnout_data <- 
+  read.csv(paste0(base_path, "Voter_Turnout_by_State.csv")) |>
+  
+  # Remove characters; parse as numeric quantity
+  mutate(
+    across(
+      -c(Year, State),
+      \(x) str_remove_all(x, pattern = "[,]|[%]") |> as.numeric()
+    )
+  )
+
+incarceration_data <- 
+  read.csv(paste0(base_path, "Incarceration_Counts_Rates.csv")) |>
+  
+  # Remove characters; parse as numeric quantity
+  mutate(
+    across(
+      c(State.prisons, Federal.prisons, Local.jails),
+      \(x) str_remove_all(x, pattern = "[,]") |> as.numeric()
+    )
+  )
+
 sug_migration_data <- read.csv(paste0(base_path, "SUG_Migration.csv"))

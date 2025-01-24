@@ -172,7 +172,7 @@ ui <-
           selectInput(
             inputId = "incarceration_variable", 
             label = "Select Variable:",
-            choices = c("State prisons", "Federal prisons", "Local jails",
+            choices = c("State.prisons", "Federal.prisons", "Local.jails",
                         "State_Prison_Rate_100k", "Federal_Prison_Rate_100k",
                         "Local_Jail_Rate_100k"),
             selected = "State prisons"
@@ -194,8 +194,7 @@ ui <-
             inputId = "university_select", 
             label = "Select University:",
             choices = colnames(sug_migration_data)[-1],
-            selected = "University_of_Mississippi",
-            multiple = TRUE
+            selected = "University_of_Mississippi"
           )
         ),
         mainPanel(
