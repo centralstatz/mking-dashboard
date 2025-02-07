@@ -295,4 +295,63 @@ server <-
         
       }, height = 500)
     
+    ## Mardi Gras
+    
+    # Display the graph (no inputs)
+    output$mardi_gras_plot <-
+      renderPlotly({
+        
+        date_plot <-
+          mardi_gras_data |>
+          
+          # Clean up
+          rename(
+            `Mardi Gras` = Mardi_Gras_Date,
+            Easter = Easter_Date
+          ) |>
+          
+          # Send dates down the rows
+          pivot_longer(
+            cols = c(`Mardi Gras`, Easter),
+            names_to = "Event",
+            values_to = "Date"
+          ) |>
+          
+          # Make a plotting element
+          mutate(
+            MonthDay = as.numeric(paste0(month(Date), ".", day(Date)))
+          ) |>
+          
+          # Make a plot
+          ggplot(
+            aes(
+              x = Year,
+              y = MonthDay,
+              color = Event,
+              text = 
+                paste0(
+                  "Event: ", Event,
+                  "<br>Year: ", Year,
+                  "<br>Date: ", format(Date, "%b %d %Y")
+                ),
+              group = Event
+            )
+          ) +
+          geom_line() +
+          geom_point() +
+          theme_minimal() +
+          theme(
+            legend.position = "top"
+          ) +
+          xlab("Event Year") +
+          scale_y_continuous(
+            name = "Event Month",
+            labels = function(x) month(x, label = T)
+          ) +
+          scale_color_manual(values = c("orange", "green"))
+        
+        ggplotly(date_plot, tooltip = "text")
+        
+      })
+    
   }

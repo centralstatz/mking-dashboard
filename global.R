@@ -9,6 +9,9 @@ library(ggplot2)
 library(dplyr)
 library(stringr)
 library(forcats)
+library(lubridate)
+library(plotly)
+library(tidyr)
 
 ## Load data files
 
@@ -54,3 +57,31 @@ incarceration_data <-
   )
 
 sug_migration_data <- read.csv(paste0(base_path, "SUG_Migration.csv"))
+
+mardi_gras_data <- 
+  read.csv(paste0(base_path, "Mardi_Gras_Easter_Dates.csv")) |>
+  
+  # Change column name
+  rename(Easter_Day = Easter_Date) |>
+  
+  # Parse dates
+  mutate(
+    
+    #Mardi Gras
+    Mardi_Gras_Date = 
+      
+      # Combine the year to extract calendar date
+      parse_date_time(
+        x = paste0(Year,"-", Mardi_Gras),
+        orders = "%Y-%d-%b"
+      ),
+    
+    # Easter
+    Easter_Date = 
+      
+      # Combine the year, month and day to extract calendar date
+      parse_date_time(
+        x = paste0(Year, "-", Month, "-", Easter_Day),
+        orders = "%Y-%m-%d"
+      )
+  )

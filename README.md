@@ -24,3 +24,12 @@ A Shiny application...
 * Parse the columns in `healthcare_data`, `voter_turnout_data` and `incarceration_data` to be numeric (added app dependency to `stringr` package)
 * Added multi-axis graph for healthcare expenditures
 * Fixed selector items for `incarceration_variable` to match dataset column names
+
+## 2/6/2025
+
+* Removed the "Classes" tab, as that will be moved to Quarto website
+* Added drop-down menus to like-pages
+* Added dependency for `lubridate` for date parsing
+* Added dependency on `tidyr` for data manipulation
+* Added dependency on `plotly` for interactive plotting
+* Recreated `manifest.json` using `rsconnect::writeManifest`
