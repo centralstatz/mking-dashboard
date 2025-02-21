@@ -354,4 +354,50 @@ server <-
         
       })
     
+    ## IPED
+    
+    # Build the IPED dataset
+    filtered_iped <- 
+      reactive({
+        
+        # Set default
+        temp_dat <- iped_data
+        
+        # Filter if necessary
+        if(!is.null(input$iped_university))
+          temp_dat <- temp_dat |> filter(`Institution Name` %in% input$iped_university)
+        
+        temp_dat
+        
+      })
+    
+    # Show table
+    output$iped_table <-
+      renderDataTable({
+        filtered_iped()
+      })
+    
+    ## MS School Achievement
+    
+    # Build the dataset
+    filtered_school_achievement <- 
+      reactive({
+        
+        # Set default
+        temp_dat <- school_achievement_data
+        
+        # Filter if necessary
+        if(!is.null(input$ms_district))
+          temp_dat <- temp_dat |> filter(`District Name` %in% input$ms_district)
+        
+        temp_dat
+        
+      })
+    
+    # Show table
+    output$ms_table <-
+      renderDataTable({
+        filtered_school_achievement()
+      })
+    
   }

@@ -33,3 +33,9 @@ A Shiny application...
 * Added dependency on `tidyr` for data manipulation
 * Added dependency on `plotly` for interactive plotting
 * Recreated `manifest.json` using `rsconnect::writeManifest`
+
+## 2/21/2025
+
+* Added `readr` dependency for cleaner column names
+* Added `DT` dependency to display table
+* Added simple tables for IPED and MS School Achievement (to start), with filters to institution and district, respectively

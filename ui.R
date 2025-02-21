@@ -172,6 +172,44 @@ ui <-
             plotOutput("sug_migration_plot") |> withSpinner(color = "#007bff")
           )
         )
+      ),
+      
+      # IPED
+      tabPanel(
+        title = "IPED",
+        icon = icon("school"),
+        sidebarLayout(
+          sidebarPanel(
+            selectInput(
+              inputId = "iped_university", 
+              label = "Institution(s)",
+              choices = sort(unique(iped_data$`Institution Name`)),
+              multiple = TRUE
+            )
+          ),
+          mainPanel(
+            dataTableOutput("iped_table") |> withSpinner(color = "#007bff")
+          )
+        )
+      ),
+      
+      # MS school achievement
+      tabPanel(
+        title = "MS School Achievement",
+        icon = icon("school"),
+        sidebarLayout(
+          sidebarPanel(
+            selectInput(
+              inputId = "ms_district", 
+              label = "District",
+              choices = sort(unique(school_achievement_data$`District Name`)),
+              multiple = TRUE
+            )
+          ),
+          mainPanel(
+            dataTableOutput("ms_table") |> withSpinner(color = "#007bff")
+          )
+        )
       )
     ),
     

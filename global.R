@@ -12,6 +12,8 @@ library(forcats)
 library(lubridate)
 library(plotly)
 library(tidyr)
+library(readr)
+library(DT)
 
 ## Load data files
 
@@ -85,3 +87,15 @@ mardi_gras_data <-
         orders = "%Y-%m-%d"
       )
   )
+
+iped_data <-
+  read_csv(paste0(base_path, "IPED%20Data.csv"))  |>
+  
+  # Remove extra columns
+  select(-starts_with("..."))
+
+school_achievement_data <-
+  read_csv(paste0(base_path, "MS_School_Achievement_Data.csv")) |>
+  
+  # Remove weird characters
+  rename_with(\(x) str_remove(x, "\\n"))
